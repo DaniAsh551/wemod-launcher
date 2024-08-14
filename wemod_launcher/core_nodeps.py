@@ -12,7 +12,8 @@ from typing import (
     Union,
 )
 
-CONFIG_PATH = os.path.join(SCRIPT_PATH, "wemod.conf")
+# CONFIG_PATH = os.path.join(SCRIPT_PATH, "wemod.conf")
+CONFIG_PATH = os.path.expanduser("~/.config/wemod-launcher/wemod.conf")
 DEF_SECTION = "Settings"
 CONFIG = configparser.ConfigParser()
 CONFIG.optionxform = str
@@ -31,7 +32,7 @@ def check_dependencies(requirements_file: str) -> bool:
             try:
                 importlib.import_module(package)
             except ImportError:
-                from coreutils import log
+                from wemod_launcher.core_utils import log
 
                 log(f"Package '{package}' is missing")
                 ret = False
@@ -51,7 +52,7 @@ def load_conf_setting(
 def save_conf_setting(
     setting: str, value: Optional[str] = None, section: str = DEF_SECTION
 ) -> None:
-    from coreutils import log
+    from wemod_launcher.core_utils import log
 
     if not isinstance(section, str):
         log("Error adding the given section, it wasn't a string")
